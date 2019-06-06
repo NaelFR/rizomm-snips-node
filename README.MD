@@ -100,5 +100,33 @@ Le déploiement et l'installation vont s'effectuer automatiquement.
 
 ### Que faire de ça ? 
 
-Vous pouvez clone ce projet puis vous rendre dans son répertoire et
+Vous pouvez clone ce projet puis vous rendre dans son répertoire et tapez la commande :
 
+```node index.js```
+
+Une série de logs va s'afficher. Notamment quand vous dites _Hey Snips_
+
+Pour aller encore plus loin vous pouvez modifier la fonction suivante dans le fichier **index.js** : 
+
+```
+function onIntentDetected(intent) {
+       console.log("[Snips Log] Intent detected");
+       switch (intent.intent.intentName) {
+           case 'naelABC:lightTurnOn':
+               console.log("J'allume la lumière de " + intent.slots[0].value.value);
+               break;
+           case 'naelABC:lightTurnOff':
+               console.log("J'éteins la lumière " + intent.slots[0].value.value);
+               break;
+           default:
+               console.log("Je n'ai pas compris");
+   
+       }
+   }
+```
+
+Vous y récupérez l'intent détecté en paramètre et pouvez en conséquence en faire ce que vous voulez (beaucoup plus que de simple console.log)
+
+Je vous invite à adapter le nom de vos intents et pareil pour la récupération des slots.
+
+_Have fun_
