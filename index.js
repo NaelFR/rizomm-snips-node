@@ -1,4 +1,5 @@
 var mqtt = require('mqtt');
+var say = require('say');
 
 var hostname = "mqtt://raspberrypi.local";
 var client  = mqtt.connect(hostname);
@@ -24,19 +25,31 @@ function onIntentDetected(intent) {
     console.log("[Snips Log] Intent detected");
     switch (intent.intent.intentName) {
         case 'naelABC:lightTurnOn':
-            console.log("J'allume la lumière de " + intent.slots[0].value.value);
+            if (intent.slots[0]) {
+                console.log("J'allume la lumière dans " + intent.slots[0].value.value);
+                say.speak("J'allume la lumière dans " + intent.slots[0].value.value);
+                break;
+            }
+            say.speak("Je n'ai pas compris où dois-je allumer la lumière ?");
             break;
         case 'naelABC:lightTurnOff':
-            console.log("J'éteins la lumière " + intent.slots[0].value.value);
+            if (intent.slots[0]) {
+                console.log("J'éteins la lumière " + intent.slots[0].value.value);
+                say.speak("J'éteins la lumière dans " + intent.slots[0].value.value);
+                break;
+            }
+            say.speak("Je n'ai pas compris où dois-je éteindre la lumière ?");
             break;
         default:
             console.log("Je n'ai pas compris");
+            say.speak("Je ne suis pas sûr d'avoir bien compris !");
 
     }
 }
 
 function onHotwordDetected() {
     console.log("[Snips Log] Hotword detected");
+    say.speak("Oui ?");
 }
 
 function onListeningStateChanged(listening) {
